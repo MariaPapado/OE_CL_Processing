@@ -6,3 +6,9 @@ eite meta ftiaxnw ena script pou na kanei delete tis klaseis pou de thelw ap ta 
 an thelw na kanw preprocessing (crop resize ktl, to yolo den exei kati, xrhsimopoiw to split.py apo to mmrotate
 https://github.com/open-mmlab/mmrotate/blob/main/tools/data/dota/README.md
 actually auto de douleuei giati ta perimenei se morfh dota, opote o rithvik eftiakse to diko tou img_split.py
+
+--kata ta alla gia to customer dataset 
+ 1o vhma trexw to Labels.py
+ 2o vhma trexw to img_split.py an thelw na kanw parapanw cropping tis eikones
+ 3o vhma trexw to myautosplit.py
+ 4o vhma 
