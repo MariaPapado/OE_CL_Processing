@@ -101,14 +101,17 @@ def save_tif_coregistered(filename, image, poly, channels=3, factor=1):
     return True
 
 # Shapefile paths
-shp1_path = "/cephfs/work/rithvik/OE_CL_shps/gas_transmission/gas_transmission.gt_building_exi_extent.shp"  # extent path
-shp2_path = "/cephfs/work/rithvik/OE_CL_shps/gas_transmission/gas_transmission.gt_building_exi_location.shp" # location path
+shp1_path = "./gas_transmission/gas_transmission.gt_building_exi_extent.shp"  # extent path
+shp2_path = "./gas_transmission/gas_transmission.gt_building_exi_location.shp" # location path
 
 # Load shapefiles
 gdf1 = gpd.read_file(shp1_path)
 gdf2 = gpd.read_file(shp2_path)
 
-gdf = pd.concat([gdf1,gdf2])
+
+#gdf = pd.concat([gdf1,gdf2])
+gdf2 = gdf2.to_crs(gdf1.crs)
+gdf = gpd.GeoDataFrame(pd.concat([gdf1, gdf2], ignore_index=True), crs=gdf1.crs)
 
 config = {
     "regions_db": {
@@ -154,9 +157,9 @@ for _, region in enumerate(tqdm(database_customer)):
         # After loading shapefiles but before filtering
 
         # Print CRS information for debugging
-        # print(f"Shapefile CRS: {gdf.crs}")
-        # print(f"Region bounds type: {type(region['bounds'])}")
-        # print(f"Region bounds: {region['bounds'].bounds}")
+#        print(f"Shapefile CRS: {gdf.crs}")
+#        print(f"Region bounds type: {type(region['bounds'])}")
+#        print(f"Region bounds: {region['bounds'].bounds}")
 
         # Check if any buildings exist in the shapefile
         # print(f"Total buildings in shapefile: {len(gdf)}")
@@ -179,7 +182,7 @@ for _, region in enumerate(tqdm(database_customer)):
 
         # Now perform the spatial intersection with the correctly transformed geometry
         buildings_gdf = gdf[gdf.intersects(region_gdf.geometry[0])]
-        # print(f"Number of buildings found: {len(buildings_gdf)}")
+        print(f"Number of buildings found: {len(buildings_gdf)}")
 
         # Create a mask from the filtered GeoDataFrame
         if not buildings_gdf.empty:
@@ -232,13 +235,18 @@ for _, region in enumerate(tqdm(database_customer)):
                 bbox_data.append(f"0 {x_center} {y_center} {width} {height}")
 
             # Save the bounding box data to a text file
-            output_path = '/cephfs/work/rithvik/datasets/datasets/BHE/test/2025Q1/labels/{}_{}.txt'.format(region['id'], region['region_customer_id'])
+#            output_path = '/cephfs/work/rithvik/datasets/datasets/BHE/2025Q1/labels/{}_{}.txt'.format(region['id'], region['region_customer_id'])
+            output_path = './bhe_data/labels/{}_{}.txt'.format(region['id'], region['region_customer_id'])
+
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
             with open(output_path, 'w') as f:
+                print('ok')
                 f.write('\n'.join(bbox_data))
 
             # Save the image as GeoTIFF instead of PNG
-            image_output_path = '/cephfs/work/rithvik/datasets/datasets/BHE/test/2025Q1/images/{}_{}.tif'.format(region['id'], region['region_customer_id'])
+#            image_output_path = '/cephfs/work/rithvik/datasets/datasets/BHE/2025Q1/images/{}_{}.tif'.format(region['id'], region['region_customer_id'])
+            image_output_path = './bhe_data/images/{}_{}.tif'.format(region['id'], region['region_customer_id'])
+
             os.makedirs(os.path.dirname(image_output_path), exist_ok=True)
 
             # Use save_tif_coregistered to preserve geographic information
