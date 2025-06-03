@@ -32,6 +32,13 @@ main.py: gia na treksei prwth fora prepei na exw kanei remove ta folders ap to n
          kai ena me ta coordinates predictions gia kathe building;),
          kai meta me vash auto kanei post processing analysis eite amesws eite an to ksanatrekseis
 
+         exei kai function gia single image prediction
+
          sto main.py to function generate_sw_predictions xrhsimopoiei by default to sliding window 
          to opoio uparxei sto post_processing_tools.
          an de thelw sliding window tote vazw mono to model.predict(.....)
+
+         grey boxes are predictions made by the model that are not in the corridor,
+         those are not affected by the false positive filtration though so there are a lot of bad predictions in there
+         thin green boxes are model predictions, thick green are shapefile labels
+         Red for missed or FN and purple for FP
