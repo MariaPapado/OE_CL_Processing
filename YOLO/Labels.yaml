@@ -1,0 +1,8 @@
+path:  ./bhe_data # dataset root dir
+train: autosplit_train.txt
+val: autosplit_val.txt
+
+# Classes
+names:
+  0: Building
+
