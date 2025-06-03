@@ -43,7 +43,7 @@ def load_models(model_type, model_version):
         
     """
     if model_type == 'yolo':
-        model = YOLO("./pre_trained/weights/best.pt") #change to correct directory
+#        model = YOLO("./pre_trained/weights/best.pt") #change to correct directory
         model = YOLO("./k_folds_cross_val_m/split_1/weights/best.pt") #change to correct directory
         return [model]  # Return as list for consistent handling
     elif model_type == 'kfolds':
