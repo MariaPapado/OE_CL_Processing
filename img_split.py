@@ -139,8 +139,8 @@ def process_dataset(image_dir, label_dir, output_dir, crop_size, padding):
 def main():
     
     CONFIG = {
-        "image_dir": "./bhe_data/train/images/",
-        "label_dir": "./bhe_data/train/labelTxt/",
+        "image_dir": "./bhe_data/images/",
+        "label_dir": "./bhe_data/labels/",
         "output_dir": "./bhe_data/cropped/",
         "crop_size": 1024,
         "padding": 50
